@@ -43,8 +43,10 @@ void getWifi() {
     } else { 
     WiFi.softAPConfig(ip, gatewayap, subnet);
     WiFi.softAP(Apssid, Appassword);
-    Serial.println("CONNECTED To: NeoPixel");
-    Serial.println("Password: '3tawi-GP'");
+    Serial.print("CONNECTED To: ");
+    Serial.print(Apssid);
+    Serial.print(" Password: ");
+    Serial.println(Appassword);
     Serial.print("IP Address: http://");
     Serial.println(WiFi.softAPIP().toString().c_str());
     }
