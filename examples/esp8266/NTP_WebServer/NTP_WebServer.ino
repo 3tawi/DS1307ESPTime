@@ -1,6 +1,6 @@
 //  DS1307ESPTime Edited by 3tawi
-// - DS1307ESPTime Library: https://github.com/3tawi/DS1307ESPTime
-// Find All "Great Projects" Videos : https://www.youtube.com/c/GreatProjects
+//  DS1307ESPTime Library: https://github.com/3tawi/DS1307ESPTime
+//  Find All "Great Projects" Videos : https://www.youtube.com/c/GreatProjects
 
 #include <ESP8266WiFi.h>
 #include <ESP8266WebServer.h>
@@ -41,6 +41,7 @@ void getWifi() {
     Serial.println(WiFi.localIP().toString().c_str());
     WiFi.softAPdisconnect(true);
     } else { 
+    WiFi.softAPConfig(ip, gatewayap, subnet);
     WiFi.softAP(Apssid, Appassword);
     Serial.println("CONNECTED To: NeoPixel");
     Serial.println("Password: '3tawi-GP'");
