@@ -1,0 +1,21 @@
+{
+  "name": "DS1307ESPTime",
+  "version": "1.0.0",
+  "keywords": "Arduino, ESP32, ESP8266, ESP01, Time, Internal RTC, RTC DS1307",
+  "description": "An Arduino library for setting and retrieving internal RTC time on ESP32 ESP8266 ESP01 boards and RTC DS1307",
+  "repository":
+  {
+    "type": "git",
+    "url": "https://github.com/3tawi/DS1307ESPTime"
+  },
+  "authors":
+  [
+    {
+        "name": "3tawi",
+        "youtube": "https://www.youtube.com/c/GreatProjects",
+        "maintainer": true
+    }
+  ],
+  "frameworks": "arduino",
+  "platforms": "esp32","esp8266","esp01"
+}
