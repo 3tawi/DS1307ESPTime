@@ -41,6 +41,7 @@ void getWifi() {
     Serial.println(WiFi.localIP().toString().c_str());
     WiFi.softAPdisconnect(true);
     } else { 
+    WiFi.softAPConfig(ip, gatewayap, subnet);
     WiFi.softAP(Apssid, Appassword);
     Serial.println("CONNECTED To: NeoPixel");
     Serial.println("Password: '3tawi-GP'");
