@@ -11,8 +11,8 @@
 DS1307ESPTime rtc;
 WebServer server(80);
 
-char ssid[] = "Hod-Hod";
-char pass[] = "hamza@Hi";
+char ssid[] = "your-ssid";
+char pass[] = "your-password";
 const char* Apssid = "Espxx";
 const char* Appassword = "3tawi-GP";
   IPAddress ip(192,168,1,142);
