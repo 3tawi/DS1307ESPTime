@@ -1,6 +1,6 @@
 //  DS1307ESPTime Edited by 3tawi
 //  DS1307ESPTime Library: https://github.com/3tawi/DS1307ESPTime
-// Find All "Great Projects" Videos : https://www.youtube.com/c/GreatProjects
+//  Find All "Great Projects" Videos : https://www.youtube.com/c/GreatProjects
 
 #include <DS1307ESPTime.h>
 
