@@ -1,6 +1,7 @@
-//  ESP8266Time Edited by 3tawi
-// - ESP8266Time Library: https://github.com/3tawi/ESPxxTime
+//  DS1307ESPTime Edited by 3tawi
+// - DS1307ESPTime Library: https://github.com/3tawi/DS1307ESPTime
 // Find All "Great Projects" Videos : https://www.youtube.com/c/GreatProjects
+
 
 #include <WiFi.h>
 #include <WebServer.h>
