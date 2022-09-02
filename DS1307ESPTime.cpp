@@ -329,7 +329,7 @@ int DS1307ESPTime::getYear(){
 	return p_tm->tm_year+1900;
 }
 
-void DS1307ESPTime::begin() {
+void DS1307ESPTime::DSbegin() {
     Wire.begin();
 }
 
@@ -341,7 +341,7 @@ uint8_t DS1307ESPTime::bcdToDec(uint8_t val) {
     return ((val / 16 * 10) + (val % 16));
 }
 
-void DS1307ESPTime::DSgetTime() {
+void DS1307ESPTime::DSgetdatime() {
     // Reset the register pointer
     Wire.beginTransmission(DS1307_I2C_ADDRESS);
     Wire.write((uint8_t)0x00);
@@ -355,6 +355,7 @@ void DS1307ESPTime::DSgetTime() {
     dayOfMonth = bcdToDec(Wire.read());
     month      = bcdToDec(Wire.read());
     year       = bcdToDec(Wire.read());
+    setTime(second, minute, hour, dayOfMonth, month+1, year+2000);
 }
 
 void DS1307ESPTime::DSsetTime() {
@@ -370,13 +371,13 @@ void DS1307ESPTime::DSsetTime() {
     Wire.endTransmission();
 }
 
-void DS1307ESPTime::datime(uint8_t _hour, uint8_t _minute, uint8_t _second, uint16_t _year, uint8_t _month, uint8_t _day, uint8_t _dow) {
-    // assign variables
-    hour = _hour;
-    minute = _minute;
-    second = _second;
-    year = _year - 2000;
-    month = _month;
-    dayOfMonth = _day;
-    dayOfWeek = _dow;
+void DS1307ESPTime::DSsetdatime() {
+    hour = getHour(true);
+    minute = getMinute();
+    second = getSecond();
+    year = getYear() - 2000;
+    month = getMonth();
+    dayOfMonth = getDay();
+    dayOfWeek = getDayofWeek();
+    DSsetTime();
 }

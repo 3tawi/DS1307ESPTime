@@ -41,10 +41,10 @@ class DS1307ESPTime {
 		void setTime(int sc, int mn, int hr, int dy, int mt, int yr, int ms = 0);
 		void getTimeStruct();
 		String getTime(String format);
-		void begin();
+		void DSbegin();
+		void DSgetdatime();
 		void DSsetTime();
-		void DSgetTime();
-		void datime(uint8_t _hour, uint8_t _minute, uint8_t _second, uint16_t _year, uint8_t _month, uint8_t _day, uint8_t _dow);
+		void DSsetdatime();
 		uint8_t second;
 		uint8_t minute;
 		uint8_t hour;
