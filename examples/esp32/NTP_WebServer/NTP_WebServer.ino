@@ -12,9 +12,9 @@ WebServer server(80);
 
 char ssid[] = "your-ssid";
 char pass[] = "your-password";
-const char* Apssid = "Espxx";
+const char* Apssid = "DS1307";
 const char* Appassword = "3tawi-GP";
-  IPAddress ip(192,168,1,144);
+  IPAddress ip(192,168,1,31);
   IPAddress dns(192, 168,1,1);
   IPAddress gateway(192, 168,1,1);
   IPAddress gatewayap(192,168,4,1);
@@ -81,32 +81,14 @@ void handlelocaltime() {
     Serial.println("Local Time Update ");
 }
 void handleMyTime() { 
-    handleRoot(); 
-    String hbuf = server.arg("htmie"); 
-    String dbuf = server.arg("ddate");
-    text = hbuf[0];
-    text += hbuf[1];
-    int h = text.toInt(); 
-    text = hbuf[3];
-    text += hbuf[4];
-    int m = text.toInt(); 
-    text = hbuf[6];
-    text += hbuf[7];
-    int s = text.toInt();
-    
-    text = dbuf[0];
-    text += dbuf[1];
-    text += dbuf[2];
-    text += dbuf[3];
-    int yr = text.toInt(); 
-    text = dbuf[5];
-    text += dbuf[6];
-    int mo = text.toInt();
-    text = dbuf[8];
-    text += dbuf[9];
-    int dd = text.toInt();
-    rtc.setTime(s, m, h, dd, mo, yr);
-    Serial.println("Manually Time Update ");
+    handleRoot();
+    int hh = server.arg("htmie").toInt();
+    int mm = server.arg("mtmie").toInt();
+    int ss = server.arg("stmie").toInt();
+    int dd = server.arg("ddate").toInt();
+    int mo = server.arg("mdate").toInt();
+    int yr = server.arg("ydate").toInt();
+    rtc.setTime(ss, mm, hh, dd, mo, yr);
 }
 void handlestate() {
   String content = "<?xml version = \"1.0\" ?>";
@@ -125,12 +107,12 @@ void setup() {
   Serial.begin(115200);
   rtc.setTime(30, 58, 19, 1, 1, 2022);  // 1th Jan 2022 19:58:30
   //rtc.setTime(1610897079);  // 1st Jan 2022 00:00:00
-  getWifi(); 
+  getWifi();
   server.on("/", handleRoot); 
   server.on("/ntptime", handlentpTime); 
   server.on("/mytimezon", handlezoneTime); 
   server.on("/localdatime", handlelocaltime);
-  server.on("/restime", handleMyTime);
+  server.on("/mydtime", handleMyTime);
   server.on("/readtemhu", handlestate);
   server.on("/restesp", handleRestesp);
   server.begin(); 
