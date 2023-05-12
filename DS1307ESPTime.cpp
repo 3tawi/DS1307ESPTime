@@ -333,6 +333,10 @@ void DS1307ESPTime::DSbegin() {
     Wire.begin();
 }
 
+void DS1307ESPTime::DSbegin(uint8_t sda, uint8_t scl) {
+    Wire.begin(sda, scl);
+}
+
 uint8_t DS1307ESPTime::decToBcd(uint8_t val) {
     return ((val / 10 * 16) + (val % 10));
 }
