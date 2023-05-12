@@ -12,9 +12,9 @@ WebServer server(80);
 
 char ssid[] = "your-ssid";
 char pass[] = "your-password";
-const char* Apssid = "Espxx";
+const char* Apssid = "DS1307";
 const char* Appassword = "3tawi-GP";
-  IPAddress ip(192,168,1,142);
+  IPAddress ip(192,168,1,31);
   IPAddress dns(192, 168,1,1);
   IPAddress gateway(192, 168,1,1);
   IPAddress gatewayap(192,168,4,1);
@@ -39,7 +39,6 @@ void getWifi() {
     Serial.println(ssid);
     Serial.print("IP Address: http://");
     Serial.println(WiFi.localIP().toString().c_str());
-    WiFi.softAPdisconnect(true);
     } else { 
     WiFi.softAPConfig(ip, gatewayap, subnet);
     WiFi.softAP(Apssid, Appassword);
@@ -70,7 +69,7 @@ void printLocalTime()
 }
 void handlentpTime() {
   handleRoot();
-  configTime(Tz * 3600, 3600, "145.238.203.10", "145.238.203.14");
+  configTime(Tz * 3600, 0, "145.238.203.10", "145.238.203.14");
   printLocalTime();
 }
 void handlezoneTime() {
@@ -86,31 +85,14 @@ void handlelocaltime() {
     Serial.println("Local Time Update ");
 }
 void handleMyTime() { 
-    handleRoot(); 
-    String hbuf = server.arg("htmie"); 
-    String dbuf = server.arg("ddate");
-    text = hbuf[0];
-    text += hbuf[1];
-    int h = text.toInt(); 
-    text = hbuf[3];
-    text += hbuf[4];
-    int m = text.toInt(); 
-    text = hbuf[6];
-    text += hbuf[7];
-    int s = text.toInt();
-    
-    text = dbuf[0];
-    text += dbuf[1];
-    text += dbuf[2];
-    text += dbuf[3];
-    int yr = text.toInt(); 
-    text = dbuf[5];
-    text += dbuf[6];
-    int mo = text.toInt();
-    text = dbuf[8];
-    text += dbuf[9];
-    int dd = text.toInt();
-    rtc.setTime(s, m, h, dd, mo, yr);
+    handleRoot();
+    int hh = server.arg("htmie").toInt();
+    int mm = server.arg("mtmie").toInt();
+    int ss = server.arg("stmie").toInt();
+    int dd = server.arg("ddate").toInt();
+    int mo = server.arg("mdate").toInt();
+    int yr = server.arg("ydate").toInt();
+    rtc.setTime(ss, mm, hh, dd, mo, yr);
     Serial.println("Manually Time Update ");
 }
 void handlestate() {
@@ -128,21 +110,21 @@ void handleRestesp() {
 }
 void setup() {
   Serial.begin(115200);
+  WiFi.mode(WIFI_AP_STA);
   getWifi(); 
-  rtc.begin(); 
+  rtc.DSbegin(); 
   updateTime();
   server.on("/", handleRoot); 
   server.on("/ntptime", handlentpTime); 
   server.on("/mytimezon", handlezoneTime); 
   server.on("/localdatime", handlelocaltime);
-  server.on("/restime", handleMyTime);
+  server.on("/mydtime", handleMyTime);
   server.on("/readtemhu", handlestate);  
   server.on("/savetime", handlesaveTime); 
   server.on("/restesp", handleRestesp);
   server.begin();
 }
 void loop() {
-
   server.handleClient();
    if(millis() - lastTime >= 1000) {
   Serial.println(rtc.getTime("%A, %B %d %Y %H:%M:%S"));   // (String) returns time with specified format 
@@ -155,19 +137,14 @@ void loop() {
 }
 void updateTime()
 {
-  configTime(0, 0, "", "");
-  rtc.DSgetTime(); 
-  int dd = rtc.dayOfMonth, mo = rtc.month + 1, yr = rtc.year + 2000;
-  rtc.setTime(rtc.second, rtc.minute, rtc.hour, dd, mo, yr);
+  rtc.DSgetdatime(); 
   configTime(Tz * 3600, 0, "", "");
+  Serial.println("Time update");
 } 
 void writeTime()
 {
   configTime(0, 0, "", ""); 
-  int h = rtc.getHour(true), m = rtc.getMinute(), s = rtc.getSecond(),
-      yr = rtc.getYear(), mo = rtc.getMonth(), dd = rtc.getDay(),
-      dw = rtc.getDayofWeek();
-  rtc.datime(h, m, s, yr, mo, dd, dw); 
-  rtc.DSsetTime(); 
+  rtc.DSsetdatime();
   configTime(Tz * 3600, 0, "", "");
+  Serial.println("Time write");
 }
