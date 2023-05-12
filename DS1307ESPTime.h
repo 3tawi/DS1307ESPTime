@@ -42,6 +42,7 @@ class DS1307ESPTime {
 		void getTimeStruct();
 		String getTime(String format);
 		void DSbegin();
+		void DSbegin(uint8_t sda, uint8_t scl);
 		void DSgetdatime();
 		void DSsetTime();
 		void DSsetdatime();
