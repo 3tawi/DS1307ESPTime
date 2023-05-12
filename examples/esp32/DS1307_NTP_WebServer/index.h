@@ -33,8 +33,16 @@ function myFunctionT() {
   var request = new XMLHttpRequest();
   var nt = document.getElementById("mytmie");
   var nd = document.getElementById("myddate");
-  var strLine = "restime?htmie=" + nt.value;
-      strLine += "&ddate=" + nd.value;
+  let timeString = nt.value;
+  let dateString = nd.value;
+  let [hh, mm, ss] = timeString.split(':');
+  let [yr, mo, dd] = dateString.split('-');
+  var strLine = "mydtime?htmie=" + hh;
+      strLine += "&mtmie=" + mm;
+      strLine += "&stmie=" + ss;
+      strLine += "&ddate=" + dd;
+      strLine += "&mdate=" + mo;
+      strLine += "&ydate=" + yr;
   request.open("GET", strLine, false);
   request.send(null);
 }
